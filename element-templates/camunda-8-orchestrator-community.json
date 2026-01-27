@@ -1,0 +1,262 @@
+{
+  "$schema" : "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+  "name" : "Camunda 8 Orchestrator (Community)",
+  "id" : "io.camunda.community.c8.orchestrator.v1",
+  "metadata" : {
+    "keywords" : [ ]
+  },
+  "version" : 1,
+  "category" : {
+    "id" : "connectors",
+    "name" : "Connectors"
+  },
+  "appliesTo" : [ "bpmn:Task" ],
+  "elementType" : {
+    "value" : "bpmn:ServiceTask"
+  },
+  "groups" : [ {
+    "id" : "connection",
+    "label" : "Cluster Connection"
+  }, {
+    "id" : "operation",
+    "label" : "Operation"
+  }, {
+    "id" : "details",
+    "label" : "Operation Details"
+  }, {
+    "id" : "connector",
+    "label" : "Connector"
+  }, {
+    "id" : "output",
+    "label" : "Output mapping"
+  }, {
+    "id" : "error",
+    "label" : "Error handling"
+  }, {
+    "id" : "retries",
+    "label" : "Retries"
+  } ],
+  "properties" : [ {
+    "value" : "io.camunda:c8-orchestrator-community:1",
+    "binding" : {
+      "property" : "type",
+      "type" : "zeebe:taskDefinition"
+    },
+    "type" : "Hidden"
+  }, {
+    "id" : "clusterId",
+    "label" : "Cluster ID",
+    "optional" : false,
+    "feel" : "optional",
+    "group" : "connection",
+    "binding" : {
+      "name" : "clusterId",
+      "type" : "zeebe:input"
+    },
+    "type" : "String"
+  }, {
+    "id" : "region",
+    "label" : "Region",
+    "optional" : false,
+    "value" : "bru-2",
+    "feel" : "optional",
+    "group" : "connection",
+    "binding" : {
+      "name" : "region",
+      "type" : "zeebe:input"
+    },
+    "type" : "String"
+  }, {
+    "id" : "clientId",
+    "label" : "Client ID",
+    "optional" : false,
+    "feel" : "optional",
+    "group" : "connection",
+    "binding" : {
+      "name" : "clientId",
+      "type" : "zeebe:input"
+    },
+    "type" : "String"
+  }, {
+    "id" : "clientSecret",
+    "label" : "Client Secret",
+    "optional" : false,
+    "feel" : "optional",
+    "group" : "connection",
+    "binding" : {
+      "name" : "clientSecret",
+      "type" : "zeebe:input"
+    },
+    "type" : "Text"
+  }, {
+    "id" : "operation",
+    "label" : "Operation",
+    "optional" : false,
+    "value" : "START_PROCESS",
+    "group" : "operation",
+    "binding" : {
+      "name" : "operation",
+      "type" : "zeebe:input"
+    },
+    "type" : "Dropdown",
+    "choices" : [ {
+      "name" : "Start Process Instance",
+      "value" : "START_PROCESS"
+    }, {
+      "name" : "Cancel Process Instance",
+      "value" : "CANCEL_INSTANCE"
+    }, {
+      "name" : "Complete User Task",
+      "value" : "COMPLETE_TASK"
+    }, {
+      "name" : "Resolve Incident",
+      "value" : "RESOLVE_INCIDENT"
+    } ]
+  }, {
+    "id" : "bpmnProcessId",
+    "label" : "BPMN Process ID",
+    "optional" : false,
+    "feel" : "optional",
+    "group" : "details",
+    "binding" : {
+      "name" : "bpmnProcessId",
+      "type" : "zeebe:input"
+    },
+    "condition" : {
+      "property" : "operation",
+      "equals" : "START_PROCESS",
+      "type" : "simple"
+    },
+    "type" : "String"
+  }, {
+    "id" : "objectKey",
+    "label" : "Object Key (Instance or Incident)",
+    "description" : "The numeric ID from Operate",
+    "optional" : false,
+    "feel" : "optional",
+    "group" : "details",
+    "binding" : {
+      "name" : "objectKey",
+      "type" : "zeebe:input"
+    },
+    "condition" : {
+      "property" : "operation",
+      "oneOf" : [ "CANCEL_INSTANCE", "RESOLVE_INCIDENT" ],
+      "type" : "simple"
+    },
+    "type" : "String"
+  }, {
+    "id" : "userTaskKey",
+    "label" : "User Task Key",
+    "optional" : false,
+    "feel" : "optional",
+    "group" : "details",
+    "binding" : {
+      "name" : "userTaskKey",
+      "type" : "zeebe:input"
+    },
+    "condition" : {
+      "property" : "operation",
+      "equals" : "COMPLETE_TASK",
+      "type" : "simple"
+    },
+    "type" : "String"
+  }, {
+    "id" : "variables",
+    "label" : "Variables",
+    "optional" : false,
+    "value" : "={}",
+    "feel" : "optional",
+    "group" : "details",
+    "binding" : {
+      "name" : "variables",
+      "type" : "zeebe:input"
+    },
+    "condition" : {
+      "property" : "operation",
+      "oneOf" : [ "START_PROCESS", "COMPLETE_TASK" ],
+      "type" : "simple"
+    },
+    "type" : "Text"
+  }, {
+    "id" : "version",
+    "label" : "Version",
+    "description" : "Version of the element template",
+    "value" : "1",
+    "group" : "connector",
+    "binding" : {
+      "key" : "elementTemplateVersion",
+      "type" : "zeebe:taskHeader"
+    },
+    "type" : "Hidden"
+  }, {
+    "id" : "id",
+    "label" : "ID",
+    "description" : "ID of the element template",
+    "value" : "io.camunda.community.c8.orchestrator.v1",
+    "group" : "connector",
+    "binding" : {
+      "key" : "elementTemplateId",
+      "type" : "zeebe:taskHeader"
+    },
+    "type" : "Hidden"
+  }, {
+    "id" : "resultVariable",
+    "label" : "Result variable",
+    "description" : "Name of variable to store the response in",
+    "group" : "output",
+    "binding" : {
+      "key" : "resultVariable",
+      "type" : "zeebe:taskHeader"
+    },
+    "type" : "String"
+  }, {
+    "id" : "resultExpression",
+    "label" : "Result expression",
+    "description" : "Expression to map the response into process variables",
+    "feel" : "required",
+    "group" : "output",
+    "binding" : {
+      "key" : "resultExpression",
+      "type" : "zeebe:taskHeader"
+    },
+    "type" : "Text"
+  }, {
+    "id" : "errorExpression",
+    "label" : "Error expression",
+    "description" : "Expression to handle errors. Details in the <a href=\"https://docs.camunda.io/docs/components/connectors/use-connectors/\" target=\"_blank\">documentation</a>.",
+    "feel" : "required",
+    "group" : "error",
+    "binding" : {
+      "key" : "errorExpression",
+      "type" : "zeebe:taskHeader"
+    },
+    "type" : "Text"
+  }, {
+    "id" : "retryCount",
+    "label" : "Retries",
+    "description" : "Number of retries",
+    "value" : "3",
+    "feel" : "optional",
+    "group" : "retries",
+    "binding" : {
+      "property" : "retries",
+      "type" : "zeebe:taskDefinition"
+    },
+    "type" : "String"
+  }, {
+    "id" : "retryBackoff",
+    "label" : "Retry backoff",
+    "description" : "ISO-8601 duration to wait between retries",
+    "value" : "PT0S",
+    "group" : "retries",
+    "binding" : {
+      "key" : "retryBackoff",
+      "type" : "zeebe:taskHeader"
+    },
+    "type" : "String"
+  } ],
+  "icon" : {
+    "contents" : "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcNCiAgd2lkdGg9IjMyIg0KICBoZWlnaHQ9IjMyIg0KICB2aWV3Qm94PSIwIDAgMzIgMzIiDQogIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyINCj4NCiAgPCEtLSBCYWNrZ3JvdW5kIChvcHRpb25hbCwgY2FuIHJlbW92ZSBpZiBuZWVkZWQpIC0tPg0KICA8cmVjdCB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHJ4PSI2IiBmaWxsPSIjRkZGRkZGIi8+DQoNCiAgPCEtLSBDZW50ZXIgbm9kZSAtLT4NCiAgPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iNSIgZmlsbD0iIzFFODhFNSIvPg0KDQogIDwhLS0gVG9wIG5vZGUgLS0+DQogIDxjaXJjbGUgY3g9IjE2IiBjeT0iNS41IiByPSIzIiBmaWxsPSIjRkI4QzAwIi8+DQoNCiAgPCEtLSBSaWdodCBub2RlIC0tPg0KICA8Y2lyY2xlIGN4PSIyNi41IiBjeT0iMTYiIHI9IjMiIGZpbGw9IiM0M0EwNDciLz4NCg0KICA8IS0tIEJvdHRvbSBub2RlIC0tPg0KICA8Y2lyY2xlIGN4PSIxNiIgY3k9IjI2LjUiIHI9IjMiIGZpbGw9IiNFNTM5MzUiLz4NCg0KICA8IS0tIExlZnQgbm9kZSAtLT4NCiAgPGNpcmNsZSBjeD0iNS41IiBjeT0iMTYiIHI9IjMiIGZpbGw9IiM4RTI0QUEiLz4NCg0KICA8IS0tIENvbm5lY3Rpb25zIC0tPg0KICA8bGluZSB4MT0iMTYiIHkxPSIxMSIgeDI9IjE2IiB5Mj0iOC41IiBzdHJva2U9IiMyNjMyMzgiIHN0cm9rZS13aWR0aD0iMiIvPg0KICA8bGluZSB4MT0iMjEiIHkxPSIxNiIgeDI9IjIzLjUiIHkyPSIxNiIgc3Ryb2tlPSIjMjYzMjM4IiBzdHJva2Utd2lkdGg9IjIiLz4NCiAgPGxpbmUgeDE9IjE2IiB5MT0iMjEiIHgyPSIxNiIgeTI9IjIzLjUiIHN0cm9rZT0iIzI2MzIzOCIgc3Ryb2tlLXdpZHRoPSIyIi8+DQogIDxsaW5lIHgxPSIxMSIgeTE9IjE2IiB4Mj0iOC41IiB5Mj0iMTYiIHN0cm9rZT0iIzI2MzIzOCIgc3Ryb2tlLXdpZHRoPSIyIi8+DQo8L3N2Zz4NCg=="
+  }
+}
