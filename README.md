@@ -14,6 +14,16 @@ Usually, if you want one process to talk to another in Camunda 8, you have to wr
 - **Complete User Task**: Finish a task programmatically without needing a human to click a button.
 - **Resolve Incident**: Fix process errors and get them moving again automatically.
 
+> [!IMPORTANT]
+> **Future Plan**
+>
+> Currently these features are in prototype stage. If this connector is helpful to the community, I plan to:
+>
+> - Add more operations in future.
+> - Improve currently listed operations if the community finds this connector helpful.
+>
+> If you have ideas or feedback, please let me know!
+
 ---
 
 ## Example Demo
